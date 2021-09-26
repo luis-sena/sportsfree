@@ -1,0 +1,33 @@
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        servlet:
+          DispatcherServlet: DEBUG
+        web: INFO
+    br:
+      com:
+        lsena:
+          sportsfree: DEBUG
+spring:
+  application:
+    name: despesas
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://0.0.0.0:5432/sportsfree?createDatabaseIfNotExist=true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+com:
+  zaxxer:
+    hikari:
+      HikariDataSource:
+        driverclassname: org.postgresql.Driver
+
