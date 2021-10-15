@@ -12,7 +12,7 @@ logging:
           sportsfree: DEBUG
 spring:
   application:
-    name: despesas
+    name: sportsfree
   datasource:
     username: postgres
     password: postgres
