@@ -12,4 +12,10 @@ public class TestController {
     public String testController(){
         return "Teste ok";
     }
+
+
+    @GetMapping("staging")
+    public String testStagingController(){
+        return "Teste staging ok";
+    }
 }
