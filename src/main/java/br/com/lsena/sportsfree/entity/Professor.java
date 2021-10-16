@@ -18,4 +18,5 @@ import javax.persistence.Id;
 public class Professor extends AbstractEntity<Long>{
 
     private String nome;
+    private String materia;
 }
