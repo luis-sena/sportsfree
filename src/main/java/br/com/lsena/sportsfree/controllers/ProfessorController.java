@@ -4,10 +4,7 @@ import br.com.lsena.sportsfree.entity.Professor;
 import br.com.lsena.sportsfree.repository.ProfessorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,7 +21,7 @@ public class ProfessorController {
     }
 
     @PostMapping
-    public ResponseEntity<Professor> salvar(Professor professor){
+    public ResponseEntity<Professor> salvar(@RequestBody Professor professor){
         return ResponseEntity.ok(repository.save(professor));
     }
 }
