@@ -1,4 +1,4 @@
-package br.com.lsena.sportsfree.entity;
+package br.com.sportsfree.entity;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;

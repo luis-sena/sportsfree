@@ -1,4 +1,4 @@
-package br.com.lsena.sportsfree.dto;
+package br.com.sportsfree.dto;
 
 public class SportDTO {
     

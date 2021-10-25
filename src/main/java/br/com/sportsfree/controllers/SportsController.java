@@ -1,8 +1,9 @@
-package br.com.lsena.sportsfree.controllers;
+package br.com.sportsfree.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.sportsfree.dto.SportDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,8 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import br.com.lsena.sportsfree.dto.SportDTO;
 
 @RestController
 @RequestMapping("sports")
