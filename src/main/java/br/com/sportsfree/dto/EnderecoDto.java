@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Embeddable;
-
 @Data
 @SuperBuilder
 @NoArgsConstructor

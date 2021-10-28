@@ -1,12 +1,20 @@
 plugins {
-    id 'org.springframework.boot' version '2.5.5'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
+    id "org.springframework.boot" version "2.5.5"
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+    id "java"
+    id "com.adarshr.test-logger" version "3.0.0"
 }
 
-group = 'br.com.lsena'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+group = "br.com.sportsfree"
+version = "0.0.1-SNAPSHOT"
+sourceCompatibility = "11"
+
+ext {
+    springVersion = "2.5.5"
+    lombokVersion = "1.18.22"
+    postgresVersion = "42.2.24"
+    h2Version = "1.4.200"
+}
 
 configurations {
     compileOnly {
@@ -19,15 +27,16 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'org.postgresql:postgresql'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'com.h2database:h2'
+    implementation "org.springframework.boot:spring-boot-starter-web:$springVersion"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springVersion"
+    implementation "org.springframework.boot:spring-boot-starter-validation:$springVersion"
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    developmentOnly "org.springframework.boot:spring-boot-devtools:$springVersion"
+    runtimeOnly "org.postgresql:postgresql:$postgresVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:$springVersion"
+    testImplementation "org.projectlombok:lombok:$lombokVersion"
+    testRuntimeOnly "com.h2database:h2:$h2Version"
 }
 
 jar {
@@ -36,4 +45,7 @@ jar {
 
 test {
     useJUnitPlatform()
+    testlogger {
+        theme 'mocha'
+    }
 }

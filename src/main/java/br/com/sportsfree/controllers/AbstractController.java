@@ -2,11 +2,7 @@ package br.com.sportsfree.controllers;
 
 import br.com.sportsfree.dto.AbstractDto;
 import br.com.sportsfree.service.AbstractService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

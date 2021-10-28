@@ -9,11 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
+@Data
 @MappedSuperclass
-@Getter
-@Setter
 @SuperBuilder
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class AbstractEntity<Long extends Serializable> implements Serializable {

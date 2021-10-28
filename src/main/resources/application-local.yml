@@ -8,7 +8,6 @@ logging:
         web: INFO
     br:
       com:
-        lsena:
           sportsfree: DEBUG
 spring:
   application:
@@ -23,7 +22,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
 
 com:
   zaxxer:

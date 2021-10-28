@@ -2,8 +2,8 @@ package br.com.sportsfree.mapper;
 
 import br.com.sportsfree.dto.EnderecoDto;
 import br.com.sportsfree.dto.ProfessorDto;
-import br.com.sportsfree.entity.embeddable.Endereco;
 import br.com.sportsfree.entity.ProfessorEntity;
+import br.com.sportsfree.entity.embeddable.Endereco;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 

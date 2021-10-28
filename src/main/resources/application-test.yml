@@ -8,7 +8,6 @@
 #        web: INFO
 #    br:
 #      com:
-#        lsena:
 #          sportsfree: DEBUG
 #spring:
 #  application:
@@ -20,5 +19,5 @@
 #    driver-class-name: org.h2.Driver
 #    hibernate:
 #      ddl-auto: update
-#      show-sql: true
+#      show-sql: false
 

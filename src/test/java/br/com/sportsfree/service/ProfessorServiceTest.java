@@ -1,26 +1,29 @@
 package br.com.sportsfree.service;
 
-import br.com.sportsfree.dto.EnderecoDto;
 import br.com.sportsfree.dto.ProfessorDto;
 import br.com.sportsfree.entity.ProfessorEntity;
-import br.com.sportsfree.entity.embeddable.Endereco;
+import br.com.sportsfree.error.RequestParamException;
+import br.com.sportsfree.error.ResourceNotFoundExeption;
 import br.com.sportsfree.mapper.ProfessorMapper;
 import br.com.sportsfree.repository.ProfessorRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 import java.util.Optional;
 
+import static br.com.sportsfree.utils.ProfessorTesteUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
 class ProfessorServiceTest {
 
     @Mock
@@ -45,6 +48,18 @@ class ProfessorServiceTest {
     }
 
     @Test
+    @DisplayName("Deve Lancar RequestParamException Quando Não Salvar Um Professor")
+    void deveLancarRequestParamExceptionQuandoNaoSalvarUmProfessor() {
+        ProfessorDto professorDto = criarProfessorDto();
+
+        when(repository.save(any(ProfessorEntity.class))).thenThrow(RuntimeException.class);
+
+        assertThatExceptionOfType(RequestParamException.class)
+                .isThrownBy(() -> service.salvar(professorDto))
+                .withMessage("Erro ao salvar recurso, verifique os parametros digitados");
+    }
+
+    @Test
     @DisplayName("Deve atualizar Um professor")
     void deveAtualizarUmProfessor() {
         ProfessorDto professorDto = criarProfessorDtoComId();
@@ -60,16 +75,70 @@ class ProfessorServiceTest {
     }
 
     @Test
+    @DisplayName("Deve Lancar RequestParamException Quando Não Atualizar Um Professor")
+    void deveLancarRequestParamExceptionQuandoNaoAtualizarUmProfessor() {
+        ProfessorDto professorDto = criarProfessorDtoComId();
+
+        when(repository.save(any(ProfessorEntity.class))).thenThrow(RuntimeException.class);
+        when(repository.findById(anyLong())).thenReturn(Optional.of(criarProfessorEntity()));
+
+        assertThatExceptionOfType(RequestParamException.class)
+                .isThrownBy(() -> service.atualizar(professorDto))
+                .withMessage("Erro ao atualizar recurso, verifique os parametros digitados");
+
+        verify(repository, times(1)).findById(anyLong());
+    }
+
+    @Test
+    @DisplayName("Deve Lancar ResourceNotFoundExeption Quando Não Encontrar Um Professor Para Atualizar")
+    void deveLancarResourceNotFoundExeptionQuandoNaoAtualizarUmProfessor() {
+        ProfessorDto professorDto = criarProfessorDtoComId();
+
+        when(repository.findById(anyLong())).thenReturn(Optional.empty());
+
+        assertThatExceptionOfType(ResourceNotFoundExeption.class)
+                .isThrownBy(() -> service.atualizar(professorDto))
+                .withMessage("Recurso não encontrado com o ID: 1");
+
+        verify(repository, never()).save(any(ProfessorEntity.class));
+        verify(repository, times(1)).findById(anyLong());
+    }
+
+    @Test
     @DisplayName("Deve deletar Um professor")
     void deveDeletarUmProfessor() {
-        ProfessorEntity professorEntity = criarProfessorEntityComId();
-
         doNothing().when(repository).delete(any(ProfessorEntity.class));
         when(repository.findById(anyLong())).thenReturn(Optional.of(criarProfessorEntity()));
 
         service.deletar(1L);
 
         verify(repository, times(1)).delete(any(ProfessorEntity.class));
+        verify(repository, times(1)).findById(anyLong());
+    }
+
+    @Test
+    @DisplayName("Deve Lancar ResourceNotFoundExeption Quando Não Encontrar Um Professor Para Deletar")
+    void deveLancarResourceNotFoundExeptionQuandoNaoEncontrarUmProfessorParaDeletar() {
+        when(repository.findById(anyLong())).thenReturn(Optional.empty());
+
+        assertThatExceptionOfType(ResourceNotFoundExeption.class)
+                .isThrownBy(() -> service.deletar(1L))
+                .withMessage("Recurso não encontrado com o ID: 1");
+
+        verify(repository, never()).delete(any(ProfessorEntity.class));
+        verify(repository, times(1)).findById(anyLong());
+    }
+
+    @Test
+    @DisplayName("Deve Lancar RequestParamException Quando Não Deletar Um Professor")
+    void deveLancarRequestParamExceptionQuandoNaoDeletarUmProfessor() {
+        doThrow(RuntimeException.class).when(repository).delete(any(ProfessorEntity.class));
+        when(repository.findById(anyLong())).thenReturn(Optional.of(criarProfessorEntity()));
+
+        assertThatExceptionOfType(RequestParamException.class)
+                .isThrownBy(() -> service.deletar(1L))
+                .withMessage("Não foi possível deletar o recurso com o id: 1");
+
         verify(repository, times(1)).findById(anyLong());
     }
 
@@ -99,53 +168,13 @@ class ProfessorServiceTest {
         assertThat(lista).hasSize(1);
     }
 
-    ProfessorDto criarProfessorDto(){
-        EnderecoDto enderecoDto = EnderecoDto.builder()
-                .cep("11111-111")
-                .cidade("Cidade do Professor")
-                .bairro("Bairro do Professor")
-                .rua("Rua do Professor")
-                .numero(20)
-                .uf("RP")
-                .complemento("Complemento do professor")
-                .build();
+    @Test
+    @DisplayName("Deve Lancar RequestParamException Quando Não Listar Professores")
+    void deveLancarRequestParamExceptionQuandoNaoListarProfessores() {
+        when(repository.findAll()).thenThrow(RuntimeException.class);
 
-        return ProfessorDto.builder()
-                .nome("Professor 1")
-                .email("professor@professor.com.br")
-                .cpf("111.111.111-11")
-                .rg("11.111.11-1")
-                .endereco(enderecoDto)
-                .build();
-    }
-    ProfessorEntity criarProfessorEntity(){
-        Endereco endereco = Endereco.builder()
-                .cep("11111-111")
-                .cidade("Cidade do Professor")
-                .bairro("Bairro do Professor")
-                .rua("Rua do Professor")
-                .numero(20)
-                .uf("RP")
-                .complemento("Complemento do professor")
-                .build();
-
-        return ProfessorEntity.builder()
-                .nome("Professor 1")
-                .email("professor@professor.com.br")
-                .cpf("111.111.111-11")
-                .rg("11.111.11-1")
-                .endereco(endereco)
-                .build();
-    }
-
-    ProfessorDto criarProfessorDtoComId(){
-        ProfessorDto professorDto = criarProfessorDto();
-        professorDto.setId(1L);
-        return professorDto;
-    }
-    ProfessorEntity criarProfessorEntityComId(){
-        ProfessorEntity professorEntity = criarProfessorEntity();
-        professorEntity.setId(1L);
-        return professorEntity;
+        assertThatExceptionOfType(RequestParamException.class)
+                .isThrownBy(() -> service.listar())
+                .withMessage("Erro ao listar recurso");
     }
 }
