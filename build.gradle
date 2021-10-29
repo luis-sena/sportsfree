@@ -1,12 +1,22 @@
 plugins {
-    id 'org.springframework.boot' version '2.5.5'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
+    id "org.springframework.boot" version "2.5.5"
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+    id "java"
+    id "com.adarshr.test-logger" version "3.0.0"
+    id "org.sonarqube" version "3.3"
+    id 'jacoco'
 }
 
-group = 'br.com.lsena'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+group = "br.com.sportsfree"
+version = "0.0.1-SNAPSHOT"
+sourceCompatibility = "11"
+
+ext {
+    springVersion = "2.5.5"
+    lombokVersion = "1.18.22"
+    postgresVersion = "42.2.24"
+    h2Version = "1.4.200"
+}
 
 configurations {
     compileOnly {
@@ -19,13 +29,16 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'org.postgresql:postgresql'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation "org.springframework.boot:spring-boot-starter-web:$springVersion"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springVersion"
+    implementation "org.springframework.boot:spring-boot-starter-validation:$springVersion"
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    developmentOnly "org.springframework.boot:spring-boot-devtools:$springVersion"
+    runtimeOnly "org.postgresql:postgresql:$postgresVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:$springVersion"
+    testImplementation "org.projectlombok:lombok:$lombokVersion"
+    testRuntimeOnly "com.h2database:h2:$h2Version"
 }
 
 jar {
@@ -34,4 +47,35 @@ jar {
 
 test {
     useJUnitPlatform()
+    testlogger {
+        theme 'mocha'
+    }
+}
+
+test.finalizedBy jacocoTestReport
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "sportsfree"
+        property "sonar.organization", "luis-sena"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.language", "java"
+        property "sonar.core.codeCoveragePlugin", "jacoco"
+        property "sonar.jacoco.reportPaths", "${buildDir}/jacoco/test.exec"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/jacoco.xml"
+        property "sonar.coverage.exclusions", "**/br/com/sportsfree/dto/**,**/br/com/sportsfree/entity/**,**/br/com/sportsfree/handler/**,**/br/com/sportsfree/error/**"
+    }
+}
+
+tasks.named('sonarqube').configure {
+    dependsOn test
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        xml.destination file("${buildDir}/reports/jacoco/jacoco.xml")
+        html.outputLocation = layout.buildDirectory.dir('jacoco')
+    }
 }
