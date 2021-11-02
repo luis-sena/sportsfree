@@ -14,10 +14,10 @@ import java.io.Serializable;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class AbstractEntity<Long extends Serializable> implements Serializable {
+public abstract class AbstractEntity<L extends Serializable> implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private L id;
 }
 
