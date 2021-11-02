@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-public class Endereco {
+public class Endereco implements Serializable {
     private String cep;
     private String cidade;
     private String uf;
