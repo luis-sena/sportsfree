@@ -10,6 +10,7 @@ public class CorsConfiguration implements WebMvcConfigurer{
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOriginPatterns("http://localhost:[*]", "https://front-bootcamp.herokuapp.com", "http://127.0.0.1:[*]");
+                .allowedOriginPatterns("http://localhost:[*]", "https://front-bootcamp.herokuapp.com", "http://127.0.0.1:[*]")
+                .allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE", "PATCH");
     }
 }
