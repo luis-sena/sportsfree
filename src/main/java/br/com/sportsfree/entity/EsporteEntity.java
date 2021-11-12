@@ -1,6 +1,8 @@
 package br.com.sportsfree.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -19,5 +21,8 @@ import lombok.experimental.SuperBuilder;
 public class EsporteEntity extends AbstractEntity<Long> {
     
     private String nome;
+    @Lob
+    private String descricao;
+    private String urlImagem;
 
 }

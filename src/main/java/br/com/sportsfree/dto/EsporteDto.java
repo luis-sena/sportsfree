@@ -15,4 +15,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class EsporteDto extends AbstractDto {
     private String nome;
+    private String descricao;
+    private String urlImagem;
 }
