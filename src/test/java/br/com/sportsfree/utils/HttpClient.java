@@ -1,14 +1,15 @@
 package br.com.sportsfree.utils;
 
-import io.restassured.internal.http.URIBuilder;
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
@@ -24,6 +25,7 @@ import javax.net.ssl.SSLSession;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -43,10 +45,11 @@ public class HttpClient {
         SSLConnectionSocketFactory sslConnectionSocketFactory = getSslConnectionSocketFactory(allowAll);
 
         int port = hostport != null ? hostport : -1;
-        HttpHost host = new HttpHost(hostname, port, hostschema);
+        HttpHost host = new HttpHost(hostname, port);
 
-        URIBuilder builder = new URIBuilder(path);
-        builder.addParameters(parameters);
+        URIBuilder builder = new URIBuilder()
+                .setScheme(hostschema)
+                        .setHost(hostname).setPath(path);
         URI uri = builder.build();
 
         CloseableHttpClient client = HttpClients.custom()
@@ -109,7 +112,7 @@ public class HttpClient {
         int port = hostport != null ? hostport : -1;
         HttpHost host = new HttpHost(hostname, port, hostschema);
 
-        URIBuilder builder = URIBuilder;
+        URIBuilder builder = new URIBuilder(path);
         builder.addParameters(parameters);
         URI uri = builder.build();
 
@@ -134,7 +137,7 @@ public class HttpClient {
     }
 
     public HttpResponse sendGet(String hostschema, String hostname, Integer hostport, String path, List<NameValuePair> parameters,
-                                List<Header> headers, StringEntity entity, Boolean allowAll) throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+                                List<Header> headers, StringEntity entity, Boolean allowAll) throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, URISyntaxException {
 
         SSLConnectionSocketFactory sslConnectionSocketFactory = getSslConnectionSocketFactory(allowAll);
 
@@ -161,5 +164,34 @@ public class HttpClient {
 
         return response;
 
+    }
+
+    public HttpResponse sendDelete(String hostschema, String hostname, Integer hostport, String path, List<NameValuePair> parameters, List<Header> headers, StringEntity entity, Boolean allowAll) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, KeyManagementException, URISyntaxException {
+        SSLConnectionSocketFactory sslConnectionSocketFactory = getSslConnectionSocketFactory(allowAll);
+
+        int port = hostport != null ? hostport : -1;
+        HttpHost host = new HttpHost(hostname, port);
+
+        URIBuilder builder = new URIBuilder()
+                .setScheme(hostschema)
+                .setHost(hostname).setPath(path);
+        URI uri = builder.build();
+
+        CloseableHttpClient client = HttpClients.custom()
+                .setDefaultCredentialsProvider(credsProvider)
+                .setSSLSocketFactory(sslConnectionSocketFactory).build();
+
+        HttpDelete request = new HttpDelete(uri);
+
+
+        if (headers != null && headers.size() > 0) {
+            for (Header header : headers) {
+                request.addHeader(header);
+            }
+        }
+
+        HttpResponse response = client.execute(host, request);
+
+        return response;
     }
 }

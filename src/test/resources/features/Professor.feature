@@ -13,8 +13,8 @@ Feature: Professores
     Then o sistema retorna a mensagem de documento já existente.
 
     Examples:
-      | loginADM | senhaADM | tipoPessoa | Nome        | Documento      | RG          | Telefone1   | Telefone2   | email                      | CEP       | NumeroComplemento | RedeSocial | Observacoes   |
-      | PR123    | 123456   | PF         | Professor 1 | 111.111.111-11 | 11.111.11-1 | 11987563214 | 11987563278 | professor@professor.com.br | 11111-111 | 11                | @Professor | OBS Professor |
+      |  |  | tipoPessoa | Nome        | Documento      | RG          | Telefone1   | Telefone2   | email                      | CEP       | NumeroComplemento | RedeSocial | Observacoes   |
+      |  |  | PF         | Professor 1 | 111.111.111-11 | 11.111.11-1 | 11987563214 | 11987563278 | professor@professor.com.br | 11111-111 | 11                | @Professor | OBS Professor |
 
 
 
