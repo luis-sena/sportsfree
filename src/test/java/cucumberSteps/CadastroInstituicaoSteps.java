@@ -45,23 +45,23 @@ public class CadastroInstituicaoSteps {
         btn_novaInstituicao.click();
     }
 
-    @And("Na tela de cadastro eu preencho {string}, {string}, {string}, {string}, {string}, {string}, {string}")
-    public void naTelaDeCadastroEuPreencho(String nome, String Telefone1, String Telefone2, String CEP, String Numero, String RedeSocial, String Observacoes) {
-        WebElement txt_nome = navegador.findElement(By.name("nome"));
-        WebElement txt_Telefone1 = navegador.findElement(By.name("Telefone1"));
-        WebElement txt_Telefone2 = navegador.findElement(By.name("Telefone2"));
-        WebElement txt_CEP = navegador.findElement(By.name("CEP"));
-        WebElement txt_numero = navegador.findElement(By.name("Numero"));
-        WebElement txt_RedeSocial = navegador.findElement(By.name("RedeSocial"));
-        WebElement txt_Observacoes = navegador.findElement(By.name("Observacoes"));
-        txt_nome.sendKeys(nome);
-        txt_Telefone1.sendKeys(Telefone1);
-        txt_Telefone2.sendKeys(Telefone2);
-        txt_CEP.sendKeys(CEP);
-        txt_numero.sendKeys(Numero);
-        txt_RedeSocial.sendKeys(RedeSocial);
-        txt_Observacoes.sendKeys(Observacoes);
-    }
+//    @And("Na tela de cadastro eu preencho {string}, {string}, {string}, {string}, {string}, {string}, {string}")
+//    public void naTelaDeCadastroEuPreencho(String nome, String Telefone1, String Telefone2, String CEP, String Numero, String RedeSocial, String Observacoes) {
+//        WebElement txt_nome = navegador.findElement(By.name("nome"));
+//        WebElement txt_Telefone1 = navegador.findElement(By.name("Telefone1"));
+//        WebElement txt_Telefone2 = navegador.findElement(By.name("Telefone2"));
+//        WebElement txt_CEP = navegador.findElement(By.name("CEP"));
+//        WebElement txt_numero = navegador.findElement(By.name("Numero"));
+//        WebElement txt_RedeSocial = navegador.findElement(By.name("RedeSocial"));
+//        WebElement txt_Observacoes = navegador.findElement(By.name("Observacoes"));
+//        txt_nome.sendKeys(nome);
+//        txt_Telefone1.sendKeys(Telefone1);
+//        txt_Telefone2.sendKeys(Telefone2);
+//        txt_CEP.sendKeys(CEP);
+//        txt_numero.sendKeys(Numero);
+//        txt_RedeSocial.sendKeys(RedeSocial);
+//        txt_Observacoes.sendKeys(Observacoes);
+//    }
 
     @Then("o sistema retorna mensagem de cadastro realizado com sucesso")
     public void oSistemaRetornaMensagemDeCadastroRealizadoComSucesso() {

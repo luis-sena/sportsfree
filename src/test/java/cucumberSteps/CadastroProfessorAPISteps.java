@@ -46,17 +46,17 @@ public class CadastroProfessorAPISteps {
 
     @And("executo os testes no endpoint {string}")
     public void executoOsTestesNoEndpoint(String endpoint) {
-         if (endpoint == "DEVELOPMENT") {
-             Hooks.setHostname("https://sportsfree-dev.herokuapp.com");
+         if (endpoint.equals("DEVELOPMENT") ) {
+             Hooks.setHostname("sportsfree-dev.herokuapp.com");
          }
     }
 
     @And("uso a rota {string}")
     public void usoARota(String rota) throws Throwable {
         CadastroProfessorAPISteps.path = apigeeVersion + replaceVariablesValues(rota);
-        CadastroProfessorAPISteps.path = CadastroProfessorAPISteps.path.replaceAll("", "%20");
+        CadastroProfessorAPISteps.path = CadastroProfessorAPISteps.path.replaceAll(" ", "%20");
         CadastroProfessorAPISteps.path = org.apache.commons.lang3.StringUtils.stripAccents(CadastroProfessorAPISteps.path);
-        //Hooks.scenario.write(getRequestURL());
+
     }
 
     @When("eu envio a requisição POST")
@@ -99,8 +99,8 @@ public class CadastroProfessorAPISteps {
         HttpClient http= new HttpClient();
 
         //entity = new StringEntity(jsonBodyString, ContentType.APPLICATION_JSON);
-        response = http.sendGet(hostschema, Hooks.hostname, hostport, path, parameters, headers, entity, allowAll);
-        extractJsonResponse();
+        response = http.sendDelete(hostschema, Hooks.hostname, hostport, path, parameters, headers, entity, allowAll);
+
     }
 
 
@@ -142,5 +142,11 @@ public class CadastroProfessorAPISteps {
         }
         Hooks.responseJson = result.toString();
     }
+
+    @Given("que eu queira deletar todos os professores")
+    public void queEuQueiraDeletarTodosOsProfessores() {
+        System.out.println("deletar professor");
+    }
+
 
 }

@@ -6,10 +6,12 @@ import io.cucumber.java.Scenario;
 import java.util.Collection;
 
 public class Hooks {
+
     public static Scenario scenario;
     public static String hostname;
     private static Collection<String> taggs;
     public static String responseJson;
+
 
     @Before
     public void runBeforeWithOther (Scenario scenario){
