@@ -15,11 +15,12 @@ spring:
   datasource:
     username: postgres
     password: postgres
-    url: jdbc:postgresql://0.0.0.0:5432/sportsfree?createDatabaseIfNotExist=true
+    url: jdbc:postgresql://0.0.0.0:5432/sportsfree
+
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
       ddl-auto: update
     show-sql: false

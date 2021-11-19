@@ -12,10 +12,10 @@ version = "0.0.1-SNAPSHOT"
 sourceCompatibility = "11"
 
 ext {
-    springVersion = "2.5.5"
     lombokVersion = "1.18.22"
     postgresVersion = "42.2.24"
     h2Version = "1.4.200"
+    keycloakVersion = "15.0.2"
 }
 
 configurations {
@@ -24,21 +24,33 @@ configurations {
     }
 }
 
+dependencyManagement {
+    imports {
+        mavenBom 'org.keycloak.bom:keycloak-adapter-bom:13.0.1'
+    }
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation "org.springframework.boot:spring-boot-starter-web:$springVersion"
-    implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springVersion"
-    implementation "org.springframework.boot:spring-boot-starter-validation:$springVersion"
-    compileOnly "org.projectlombok:lombok:$lombokVersion"
-    developmentOnly "org.springframework.boot:spring-boot-devtools:$springVersion"
-    runtimeOnly "org.postgresql:postgresql:$postgresVersion"
-    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
-    testImplementation "org.springframework.boot:spring-boot-starter-test:$springVersion"
-    testImplementation "org.projectlombok:lombok:$lombokVersion"
-    testRuntimeOnly "com.h2database:h2:$h2Version"
+    implementation group: "org.springframework.boot", name: "spring-boot-starter-web"
+    implementation group: "org.springframework.boot", name: "spring-boot-starter-data-jpa"
+    implementation group: "org.springframework.boot", name: "spring-boot-starter-validation"
+    implementation group: "org.springframework.boot", name: "spring-boot-starter-security"
+//    implementation group: "org.springframework.boot", name: "spring-security-oauth2-autoconfigure"
+//    implementation group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server"
+    implementation group: "org.keycloak", name: "keycloak-spring-boot-starter", version: keycloakVersion
+
+    compileOnly group: "org.projectlombok", name: "lombok", version: lombokVersion
+    developmentOnly group: "org.springframework.boot", name: "spring-boot-devtools"
+    runtimeOnly group:  "org.postgresql", name: "postgresql", version: postgresVersion
+    annotationProcessor group: "org.projectlombok", name: "lombok", version: lombokVersion
+
+    testImplementation group: "org.springframework.boot", name: "spring-boot-starter-test"
+    testImplementation group: "org.projectlombok", name: "lombok", version: lombokVersion
+    testRuntimeOnly group: "com.h2database", name: "h2", version: h2Version
 }
 
 jar {

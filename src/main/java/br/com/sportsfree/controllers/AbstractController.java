@@ -35,7 +35,7 @@ public abstract class AbstractController<D extends AbstractDto> {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletar(@PathVariable("id") Long id) {
+    public ResponseEntity<Object> deletar(@PathVariable("id") Long id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }
