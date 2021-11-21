@@ -3,7 +3,7 @@ name: Pipeline GitHub Actions - DEV
 on:
   push:
     branches:
-      - dev
+      - develop
 
 jobs:
   cicd:
