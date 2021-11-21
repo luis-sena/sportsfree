@@ -6,6 +6,9 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.mapper.ObjectMapper;
+import io.restassured.mapper.ObjectMapperDeserializationContext;
+import io.restassured.mapper.ObjectMapperSerializationContext;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -20,6 +23,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static cucumberSteps.ValidationsAPI.Hooks.scenario;
+
 
 
 public class CadastroProfessorAPISteps {
@@ -37,6 +43,7 @@ public class CadastroProfessorAPISteps {
     private static List<NameValuePair> parameters = new ArrayList<>();
     private static LinkedHashMap<String, String> userParameters = new LinkedHashMap<String, String>();
     private static Boolean allowAll = true;
+    private static String resultado;
 
 
     @Given("que eu uso o json")
@@ -56,7 +63,6 @@ public class CadastroProfessorAPISteps {
         CadastroProfessorAPISteps.path = apigeeVersion + replaceVariablesValues(rota);
         CadastroProfessorAPISteps.path = CadastroProfessorAPISteps.path.replaceAll(" ", "%20");
         CadastroProfessorAPISteps.path = org.apache.commons.lang3.StringUtils.stripAccents(CadastroProfessorAPISteps.path);
-
     }
 
     @When("eu envio a requisição POST")
@@ -74,6 +80,7 @@ public class CadastroProfessorAPISteps {
     public void httpResponseShouldBe(int responseCode) throws  Throwable {
         int statusCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(responseCode, statusCode);
+
     }
 
     @When("eu envio a requisição PUT")
@@ -141,6 +148,8 @@ public class CadastroProfessorAPISteps {
             result.append(line);
         }
         Hooks.responseJson = result.toString();
+        resultado = result.toString();
+
     }
 
     @Given("que eu queira deletar todos os professores")
@@ -149,4 +158,13 @@ public class CadastroProfessorAPISteps {
     }
 
 
+//    @And("eu tenho um novo id")
+//    public void euTenhoUmNovoId() {
+//        String originalResultado = "";
+//
+//        try{
+//        ObjectMapper mapper = new ObjectMapper();
+//        Object json = mapper.readValue(Hooks.responseJson, Object.class);
+//
+//    }
 }

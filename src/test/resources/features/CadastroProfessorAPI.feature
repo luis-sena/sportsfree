@@ -67,8 +67,8 @@ Feature: cadastro de Professor API
     Then Http response should be 200
 
     Examples:
-      |  | id | nome | email | CPF | RG | CEP | Cidade | UF | Rua | numero | bairro | complemento |
-      |  | 22 |      |       |     |    |     |        |    |     |        |        | BL3         |
+      |  | id | nome | email               | CPF | RG | CEP | Cidade | UF | Rua | numero | bairro | complemento |
+      |  | 20 |      | Jaqueline@teste.com |     |    |     |        |    |     |        |        | BL3         |
 
 
   @Positivo
@@ -82,7 +82,7 @@ Feature: cadastro de Professor API
 
     Examples:
       | id |  |
-      | 25  |  |
+      | 20 |  |
 
   @Positivo
   @Test
@@ -104,7 +104,7 @@ Feature: cadastro de Professor API
 
     Examples:
       | id |  |
-      | 17 |  |
+      | 25  |  |
 
   @Negativo
   @Test

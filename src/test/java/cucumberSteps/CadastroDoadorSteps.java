@@ -1,6 +1,7 @@
 package cucumberSteps;
 
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -16,5 +17,6 @@ public class CadastroDoadorSteps {
         WebElement btn_Doador = navegador.findElement(By.name("Doador"));
         btn_Doador.click();
     }
+
 
 }

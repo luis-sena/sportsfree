@@ -3,6 +3,8 @@ package cucumberSteps.ValidationsAPI;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 
+
+
 import java.util.Collection;
 
 public class Hooks {
@@ -30,6 +32,7 @@ public class Hooks {
     public static void setHostname(String hostname){
         Hooks.hostname = hostname;
     }
+
 
 
 
