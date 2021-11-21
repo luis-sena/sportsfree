@@ -16,6 +16,7 @@ ext {
     postgresVersion = '42.2.24.jre7'
     h2Version = "1.4.200"
     keycloakVersion = "15.0.2"
+    firebaseVersion = "8.1.0"
 }
 
 configurations {
@@ -39,9 +40,9 @@ dependencies {
     implementation group: "org.springframework.boot", name: "spring-boot-starter-data-jpa"
     implementation group: "org.springframework.boot", name: "spring-boot-starter-validation"
     implementation group: "org.springframework.boot", name: "spring-boot-starter-security"
-//    implementation group: "org.springframework.boot", name: "spring-security-oauth2-autoconfigure"
-//    implementation group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server"
-    implementation group: "org.keycloak", name: "keycloak-spring-boot-starter", version: keycloakVersion
+    implementation group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server"
+
+    implementation group: "com.google.firebase", name: "firebase-admin", version: firebaseVersion
 
     compileOnly group: "org.projectlombok", name: "lombok", version: lombokVersion
     developmentOnly group: "org.springframework.boot", name: "spring-boot-devtools"
@@ -76,6 +77,7 @@ sonarqube {
         property "sonar.jacoco.reportPaths", "${buildDir}/jacoco/test.exec"
         property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/jacoco.xml"
         property "sonar.coverage.exclusions", "**/br/com/sportsfree/dto/**,**/br/com/sportsfree/entity/**,**/br/com/sportsfree/handler/**,**/br/com/sportsfree/error/**"
+        property "sonar.qualitygate.wait","true"
     }
 }
 

@@ -1,10 +1,9 @@
 package br.com.sportsfree.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import br.com.sportsfree.dto.EsporteDto;
 import br.com.sportsfree.service.EsporteService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("esporte")

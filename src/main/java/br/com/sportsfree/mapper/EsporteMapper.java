@@ -1,10 +1,9 @@
 package br.com.sportsfree.mapper;
 
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Component;
-
 import br.com.sportsfree.dto.EsporteDto;
 import br.com.sportsfree.entity.EsporteEntity;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
 @Component
 public class EsporteMapper implements AbstractMapper<EsporteDto, EsporteEntity>{

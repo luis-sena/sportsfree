@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: sportsfree
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com
+jwt:
+  config:
+    login-url: /login
+    type: encrypted
