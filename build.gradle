@@ -1,5 +1,5 @@
 plugins {
-    id "org.springframework.boot" version "2.5.5"
+    id "org.springframework.boot" version "2.5.6"
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
     id "java"
     id "com.adarshr.test-logger" version "3.0.0"
@@ -12,9 +12,9 @@ version = "0.0.1-SNAPSHOT"
 sourceCompatibility = "11"
 
 ext {
-    springVersion = "2.5.5"
+    springVersion = '2.5.6'
     lombokVersion = "1.18.22"
-    postgresVersion = '42.2.24.jre7'
+    postgresVersion = '42.3.1'
     h2Version = "1.4.200"
     junitPlatformVersion = "1.8.1"
 }
@@ -37,50 +37,60 @@ dependencies {
     developmentOnly "org.springframework.boot:spring-boot-devtools:$springVersion"
     runtimeOnly "org.postgresql:postgresql:$postgresVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    testRuntimeOnly "com.h2database:h2:$h2Version"
+
     testImplementation "org.springframework.boot:spring-boot-starter-test:$springVersion"
     testImplementation "org.projectlombok:lombok:$lombokVersion"
-    testRuntimeOnly "com.h2database:h2:$h2Version"
 
     testImplementation "org.junit.platform:junit-platform-suite-api:$junitPlatformVersion"
     testImplementation "org.junit.platform:junit-platform-suite-engine:$junitPlatformVersion"
     testImplementation "org.junit.platform:junit-platform-engine:$junitPlatformVersion"
     testImplementation "org.junit.platform:junit-platform-launcher:$junitPlatformVersion"
+
+//    testImplementation "org.junit.platform:junit-platform-suite-commons:$junitPlatformVersion"
+//    testImplementation "org.junit.platform:junit-platform-suite:$junitPlatformVersion"
+//    testImplementation "org.junit.platform:junit-platform-runner:$junitPlatformVersion"
+
+    testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.0.0'
     testImplementation 'io.cucumber:cucumber-java:7.0.0'
     testImplementation 'io.cucumber:cucumber-junit:7.0.0'
+
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.0.0'
     testImplementation 'io.rest-assured:rest-assured:4.4.0'
-    implementation 'net.masterthought:cucumber-reporting:4.11.2'
-
+    implementation 'net.masterthought:cucumber-reporting:5.6.1'
+}
 
 jar {
     enabled = false
 }
 
-    test {
-        useJUnitPlatform()
-        testlogger {
-            theme 'mocha'
-        }
+test {
+    useJUnitPlatform()
+    systemProperty("cucumber.junit-platform.naming-strategy", "long")
+    systemProperty "cucumber.options", System.getProperty("cucumber.options")
+    testlogger {
+        theme 'mocha'
     }
+}
 
-    test.finalizedBy jacocoTestReport
+test.finalizedBy jacocoTestReport
 
-    sonarqube {
-        properties {
-            property "sonar.projectKey", "sportsfree"
-            property "sonar.organization", "luis-sena"
-            property "sonar.host.url", "https://sonarcloud.io"
-            property "sonar.language", "java"
-            property "sonar.core.codeCoveragePlugin", "jacoco"
-            property "sonar.jacoco.reportPaths", "${buildDir}/jacoco/test.exec"
-            property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/jacoco.xml"
-            property "sonar.coverage.exclusions", "**/br/com/sportsfree/dto/**,**/br/com/sportsfree/entity/**,**/br/com/sportsfree/handler/**,**/br/com/sportsfree/error/**"
-        }
+sonarqube {
+    properties {
+        property "sonar.projectKey", "sportsfree"
+        property "sonar.organization", "luis-sena"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.language", "java"
+        property "sonar.core.codeCoveragePlugin", "jacoco"
+        property "sonar.jacoco.reportPaths", "${buildDir}/jacoco/test.exec"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/jacoco.xml"
+        property "sonar.coverage.exclusions", "**/br/com/sportsfree/dto/**,**/br/com/sportsfree/entity/**,**/br/com/sportsfree/handler/**,**/br/com/sportsfree/error/**"
     }
+}
 
-    tasks.named('sonarqube').configure {
-        dependsOn test
-    }
+tasks.named('sonarqube').configure {
+    dependsOn test
+}
 
 jacocoTestReport {
     reports {
@@ -91,8 +101,8 @@ jacocoTestReport {
     }
 }
 
-configurations {
+/*configurations {
     cucumberRuntime {
         extendsFrom testImplementation
     }
-}
+}*/

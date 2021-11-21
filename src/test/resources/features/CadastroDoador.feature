@@ -3,7 +3,6 @@ Feature: cadastro de Doador
   Quero conseguir admistrar os doadores cadastrados na plataforma
   Para poder cadastrar, excluir e atualizar os doadores.
 
-
   Scenario Outline: Administrador insere um Doador
     Given que eu como administrador acesse o SportFree
     When eu clico no botão de login
