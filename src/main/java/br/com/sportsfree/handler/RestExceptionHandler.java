@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class RestExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundExeption.class)
-    public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundExeption resourceNotFoundExeption) {
+    public ResponseEntity<ResourceNotFoundDetails> handleResourceNotFoundException(ResourceNotFoundExeption resourceNotFoundExeption) {
         ResourceNotFoundDetails details = ResourceNotFoundDetails.builder()
                 .titulo("Recurso não encontrado")
                 .detalhes(resourceNotFoundExeption.getMessage())
@@ -32,7 +32,7 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(RequestParamException.class)
-    public ResponseEntity<?> handleBusinessValidationException(RequestParamException bvException) {
+    public ResponseEntity<GenericErrorDetails> handleBusinessValidationException(RequestParamException bvException) {
         GenericErrorDetails details = GenericErrorDetails.builder()
                 .titulo("Erro!")
                 .detalhes(bvException.getMessage())
@@ -44,7 +44,7 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleFieldValidationError(MethodArgumentNotValidException methodArgumentNotValidException) {
+    public ResponseEntity<ValidationErrorDetails> handleFieldValidationError(MethodArgumentNotValidException methodArgumentNotValidException) {
         List<FieldError> fieldErrors = methodArgumentNotValidException.getBindingResult().getFieldErrors();
         String fields = fieldErrors.stream().map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage()).collect(Collectors.joining(","));
         ValidationErrorDetails details = ValidationErrorDetails.builder()

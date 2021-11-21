@@ -18,5 +18,4 @@ public class CadastroDoadorSteps {
         btn_Doador.click();
     }
 
-
 }
