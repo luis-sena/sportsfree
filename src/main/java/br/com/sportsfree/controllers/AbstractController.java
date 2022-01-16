@@ -30,7 +30,7 @@ public abstract class AbstractController<D extends AbstractDto> {
     }
 
     @PutMapping
-    public ResponseEntity<D> atualizar(@Valid @RequestBody D dto) {
+    public ResponseEntity<D> atualizar(@RequestBody D dto) {
         return ResponseEntity.ok(service.atualizar(dto));
     }
 

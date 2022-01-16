@@ -15,19 +15,13 @@ ext {
     lombokVersion = "1.18.22"
     postgresVersion = '42.2.24.jre7'
     h2Version = "1.4.200"
-    keycloakVersion = "15.0.2"
     firebaseVersion = "8.1.0"
+    springSecurityVersion = "5.6.1"
 }
 
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
-    }
-}
-
-dependencyManagement {
-    imports {
-        mavenBom 'org.keycloak.bom:keycloak-adapter-bom:13.0.1'
     }
 }
 
@@ -50,6 +44,7 @@ dependencies {
     annotationProcessor group: "org.projectlombok", name: "lombok", version: lombokVersion
 
     testImplementation group: "org.springframework.boot", name: "spring-boot-starter-test"
+    testImplementation group: "org.springframework.security", name: 'spring-security-test', version: springSecurityVersion
     testImplementation group: "org.projectlombok", name: "lombok", version: lombokVersion
     testRuntimeOnly group: "com.h2database", name: "h2", version: h2Version
 }
@@ -60,6 +55,7 @@ jar {
 
 test {
     useJUnitPlatform()
+    environment 'GOOGLE_APPLICATION_CREDENTIALS','/home/lsena/Projects/ESD21/bootcamp-software-engineering-project/SportFree/firebase_config.json'
     testlogger {
         theme 'mocha'
     }
@@ -93,3 +89,10 @@ jacocoTestReport {
         html.outputLocation = layout.buildDirectory.dir('jacoco')
     }
 }
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2020.0.4"
+    }
+}
+

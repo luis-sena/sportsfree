@@ -1,5 +1,6 @@
 package br.com.sportsfree.dto;
 
+import br.com.sportsfree.validate.constraints.UsuarioExistenteConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ContatoDto {
 
+    @UsuarioExistenteConstraint
     private String email;
     private List<String> telefones;
     private String redeSocial;

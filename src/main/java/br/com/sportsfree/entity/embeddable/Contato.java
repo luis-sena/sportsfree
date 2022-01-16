@@ -3,6 +3,7 @@ package br.com.sportsfree.entity.embeddable;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
@@ -17,11 +18,13 @@ import java.util.List;
 @Embeddable
 public class Contato implements Serializable {
 
+    @Column(updatable = false)
     private String email;
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @ElementCollection
+    @Builder.Default
     private List<String> telefones = new ArrayList<>();
     private String redeSocial;
 

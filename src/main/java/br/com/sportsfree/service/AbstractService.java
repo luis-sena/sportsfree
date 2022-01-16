@@ -53,7 +53,8 @@ public abstract class AbstractService<D extends AbstractDto, E extends AbstractE
     public D atualizar(D dto){
         recuperar(dto.getId());
         try {
-            return salvar(dto);
+            E entity = repository.save(mapper.mapToEntity(dto));
+            return mapper.mapToDto(entity);
         } catch (Exception e) {
             throw new RequestParamException("Erro ao atualizar recurso, verifique os parametros digitados");
         }

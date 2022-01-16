@@ -1,9 +1,10 @@
-package br.com.sportsfree.service;
+package br.com.sportsfree.service.impl;
 
 import br.com.sportsfree.dto.EsporteDto;
 import br.com.sportsfree.entity.EsporteEntity;
 import br.com.sportsfree.mapper.EsporteMapper;
 import br.com.sportsfree.repository.EsporteRepository;
+import br.com.sportsfree.service.AbstractService;
 import org.springframework.stereotype.Service;
 
 @Service

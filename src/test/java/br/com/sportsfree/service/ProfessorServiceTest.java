@@ -1,11 +1,18 @@
+
 package br.com.sportsfree.service;
 
 import br.com.sportsfree.dto.ProfessorDto;
+import br.com.sportsfree.dto.UsuarioDto;
 import br.com.sportsfree.entity.ProfessorEntity;
 import br.com.sportsfree.error.RequestParamException;
 import br.com.sportsfree.error.ResourceNotFoundExeption;
 import br.com.sportsfree.mapper.ProfessorMapper;
 import br.com.sportsfree.repository.ProfessorRepository;
+import br.com.sportsfree.service.impl.ProfessorService;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuthException;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,16 +37,18 @@ class ProfessorServiceTest {
     private ProfessorRepository repository;
     @Spy
     private ProfessorMapper mapper;
-
+    @Mock
+    private UsuarioService usuarioService;
     @InjectMocks
     private ProfessorService service;
 
     @Test
     @DisplayName("Deve salvar Um professor")
-    void deveSalvarUmProfessor() {
+    void deveSalvarUmProfessor() throws Exception {
         ProfessorDto professorDto = criarProfessorDto();
 
         when(repository.save(any(ProfessorEntity.class))).thenReturn(criarProfessorEntity());
+        doNothing().when(usuarioService).cadastro(any(UsuarioDto.class));
 
         ProfessorDto professorSalvo = service.salvar(professorDto);
 
@@ -49,10 +58,11 @@ class ProfessorServiceTest {
 
     @Test
     @DisplayName("Deve Lancar RequestParamException Quando Não Salvar Um Professor")
-    void deveLancarRequestParamExceptionQuandoNaoSalvarUmProfessor() {
+    void deveLancarRequestParamExceptionQuandoNaoSalvarUmProfessor() throws Exception {
         ProfessorDto professorDto = criarProfessorDto();
 
         when(repository.save(any(ProfessorEntity.class))).thenThrow(RuntimeException.class);
+        doNothing().when(usuarioService).cadastro(any(UsuarioDto.class));
 
         assertThatExceptionOfType(RequestParamException.class)
                 .isThrownBy(() -> service.salvar(professorDto))
@@ -106,20 +116,22 @@ class ProfessorServiceTest {
 
     @Test
     @DisplayName("Deve deletar Um professor")
-    void deveDeletarUmProfessor() {
+    void deveDeletarUmProfessor() throws Exception {
         doNothing().when(repository).delete(any(ProfessorEntity.class));
+        doNothing().when(usuarioService).excluir(anyString());
         when(repository.findById(anyLong())).thenReturn(Optional.of(criarProfessorEntity()));
 
         service.deletar(1L);
 
         verify(repository, times(1)).delete(any(ProfessorEntity.class));
-        verify(repository, times(1)).findById(anyLong());
+        verify(repository, times(2)).findById(anyLong());
     }
 
     @Test
     @DisplayName("Deve Lancar ResourceNotFoundExeption Quando Não Encontrar Um Professor Para Deletar")
-    void deveLancarResourceNotFoundExeptionQuandoNaoEncontrarUmProfessorParaDeletar() {
+    void deveLancarResourceNotFoundExeptionQuandoNaoEncontrarUmProfessorParaDeletar() throws Exception {
         when(repository.findById(anyLong())).thenReturn(Optional.empty());
+        doNothing().when(usuarioService).excluir(anyString());
 
         assertThatExceptionOfType(ResourceNotFoundExeption.class)
                 .isThrownBy(() -> service.deletar(1L))
@@ -131,15 +143,17 @@ class ProfessorServiceTest {
 
     @Test
     @DisplayName("Deve Lancar RequestParamException Quando Não Deletar Um Professor")
-    void deveLancarRequestParamExceptionQuandoNaoDeletarUmProfessor() {
+    void deveLancarRequestParamExceptionQuandoNaoDeletarUmProfessor() throws Exception {
         doThrow(RuntimeException.class).when(repository).delete(any(ProfessorEntity.class));
+        doNothing().when(usuarioService).excluir(anyString());
+
         when(repository.findById(anyLong())).thenReturn(Optional.of(criarProfessorEntity()));
 
         assertThatExceptionOfType(RequestParamException.class)
                 .isThrownBy(() -> service.deletar(1L))
                 .withMessage("Não foi possível deletar o recurso com o id: 1");
 
-        verify(repository, times(1)).findById(anyLong());
+        verify(repository, times(2)).findById(anyLong());
     }
 
     @Test

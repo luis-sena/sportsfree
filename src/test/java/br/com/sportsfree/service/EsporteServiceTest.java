@@ -6,6 +6,7 @@ import br.com.sportsfree.error.RequestParamException;
 import br.com.sportsfree.error.ResourceNotFoundExeption;
 import br.com.sportsfree.mapper.EsporteMapper;
 import br.com.sportsfree.repository.EsporteRepository;
+import br.com.sportsfree.service.impl.EsporteService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

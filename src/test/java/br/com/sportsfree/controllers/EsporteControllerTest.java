@@ -23,10 +23,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import br.com.sportsfree.dto.EsporteDto;
-import br.com.sportsfree.service.EsporteService;
+import br.com.sportsfree.service.impl.EsporteService;
 
 @WebMvcTest(EsporteController.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -42,6 +43,7 @@ public class EsporteControllerTest {
     private EsporteService service;
 
     @Test
+    @WithMockUser(authorities = "SCOPE_PROFESSOR")
     @DisplayName("Deve salvar Um esporte")
     void deveSalvarUmEsporte() throws Exception {
         EsporteDto esporteDto = criarEsporteDto();
@@ -59,6 +61,7 @@ public class EsporteControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "SCOPE_PROFESSOR")
     @DisplayName("Deve atualizar Um esporte")
     void deveAtualizarUmEsporte() throws Exception {
         EsporteDto esporteDto = criarEsporteDto();
@@ -76,6 +79,7 @@ public class EsporteControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "SCOPE_PROFESSOR")
     @DisplayName("Deve deletar Um esporte")
     void deveDeletarUmEsporte() throws Exception {
         doNothing().when(service).deletar(anyLong());
@@ -84,6 +88,7 @@ public class EsporteControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "SCOPE_PROFESSOR")
     @DisplayName("Deve recuperar Um esporte")
     void deveRecuperarUmEsporte() throws Exception {
         EsporteDto esporteDto = criarEsporteDto();
@@ -99,6 +104,7 @@ public class EsporteControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "SCOPE_PROFESSOR")
     @DisplayName("Deve recuperar uma lista de esportes")
     void deveRecuperarUmaListaDeProfessores() throws Exception {
         EsporteDto esporteDto = criarEsporteDto();

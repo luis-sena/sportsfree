@@ -1,7 +1,7 @@
 package br.com.sportsfree.controllers;
 
 import br.com.sportsfree.dto.DoadorDto;
-import br.com.sportsfree.service.DoadorService;
+import br.com.sportsfree.service.impl.DoadorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
 import static br.com.sportsfree.utils.DoadorTesteUtils.criarDoadorDto;
+import static br.com.sportsfree.utils.DoadorTesteUtils.criarDoadorDtoComId;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
@@ -39,26 +41,28 @@ class DoadorControllerTest {
     @Test
     @DisplayName("Deve salvar Um doador")
     void deveSalvarUmDoador() throws Exception {
+        DoadorDto retorno = criarDoadorDtoComId();
         DoadorDto doadorDto = criarDoadorDto();
 
-        when(service.salvar(any(DoadorDto.class))).thenReturn(doadorDto);
+        when(service.salvar(any(DoadorDto.class))).thenReturn(retorno);
 
         mockMvc.perform(post("/doador")
                         .content(objectMapper.writeValueAsString(doadorDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isAccepted())
-                .andExpect(jsonPath("$.id").value(doadorDto.getId()))
-                .andExpect(jsonPath("$.nome").value(doadorDto.getNome()))
-                .andExpect(jsonPath("$.cpfCnpj").value(doadorDto.getCpfCnpj()))
-                .andExpect(jsonPath("$.rg").value(doadorDto.getRg()))
-                .andExpect(jsonPath("$.contato").value(doadorDto.getContato()))
-                .andExpect(jsonPath("$.endereco").value(doadorDto.getEndereco()));
+                .andExpect(jsonPath("$.id").value(retorno.getId()))
+                .andExpect(jsonPath("$.nome").value(retorno.getNome()))
+                .andExpect(jsonPath("$.cpfCnpj").value(retorno.getCpfCnpj()))
+                .andExpect(jsonPath("$.rg").value(retorno.getRg()))
+                .andExpect(jsonPath("$.contato").value(retorno.getContato()))
+                .andExpect(jsonPath("$.endereco").value(retorno.getEndereco()));
     }
 
     @Test
+    @WithMockUser(authorities = "SCOPE_ADMIN")
     @DisplayName("Deve atualizar Um doador")
     void deveAtualizarUmDoador() throws Exception {
-        DoadorDto doadorDto = criarDoadorDto();
+        DoadorDto doadorDto = criarDoadorDtoComId();
 
         when(service.atualizar(any(DoadorDto.class))).thenReturn(doadorDto);
 
@@ -75,6 +79,7 @@ class DoadorControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "SCOPE_ADMIN")
     @DisplayName("Deve deletar Um doador")
     void deveDeletarUmDoador() throws Exception {
         doNothing().when(service).deletar(anyLong());
@@ -83,9 +88,10 @@ class DoadorControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "SCOPE_DOADOR")
     @DisplayName("Deve recuperar Um doador")
     void deveRecuperarUmDoador() throws Exception {
-        DoadorDto doadorDto = criarDoadorDto();
+        DoadorDto doadorDto = criarDoadorDtoComId();
 
         when(service.recuperar(anyLong())).thenReturn(doadorDto);
 
@@ -100,9 +106,10 @@ class DoadorControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "SCOPE_ADMIN")
     @DisplayName("Deve recuperar uma lista de doadores")
     void deveRecuperarUmaListaDeDoadores() throws Exception {
-        DoadorDto doadorDto = criarDoadorDto();
+        DoadorDto doadorDto = criarDoadorDtoComId();
 
         when(service.listar()).thenReturn(List.of(doadorDto));
 

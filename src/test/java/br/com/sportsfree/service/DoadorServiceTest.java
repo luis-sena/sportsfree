@@ -1,16 +1,16 @@
 package br.com.sportsfree.service;
 
 import br.com.sportsfree.dto.DoadorDto;
+import br.com.sportsfree.dto.UsuarioDto;
 import br.com.sportsfree.entity.DoadorEntity;
 import br.com.sportsfree.error.RequestParamException;
 import br.com.sportsfree.error.ResourceNotFoundExeption;
 import br.com.sportsfree.mapper.DoadorMapper;
-import br.com.sportsfree.mapper.DoadorMapper;
 import br.com.sportsfree.repository.DoadorRepository;
-import br.com.sportsfree.repository.DoadorRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import br.com.sportsfree.service.impl.DoadorService;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuthException;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -23,7 +23,6 @@ import java.util.Optional;
 import static br.com.sportsfree.utils.DoadorTesteUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -33,6 +32,8 @@ class DoadorServiceTest {
 
     @Mock
     private DoadorRepository repository;
+    @Mock
+    private UsuarioService usuarioService;
     @Spy
     private DoadorMapper mapper;
 
@@ -41,10 +42,11 @@ class DoadorServiceTest {
 
     @Test
     @DisplayName("Deve salvar Um doador")
-    void deveSalvarUmDoador() {
+    void deveSalvarUmDoador() throws Exception {
         DoadorDto doadorDto = criarDoadorDto();
 
         when(repository.save(any(DoadorEntity.class))).thenReturn(criarDoadorEntity());
+        doNothing().when(usuarioService).cadastro(any(UsuarioDto.class));
 
         DoadorDto doadorSalvo = service.salvar(doadorDto);
 
@@ -54,10 +56,11 @@ class DoadorServiceTest {
 
     @Test
     @DisplayName("Deve Lancar RequestParamException Quando Não Salvar Um Doador")
-    void deveLancarRequestParamExceptionQuandoNaoSalvarUmDoador() {
+    void deveLancarRequestParamExceptionQuandoNaoSalvarUmDoador() throws Exception {
         DoadorDto doadorDto = criarDoadorDto();
 
         when(repository.save(any(DoadorEntity.class))).thenThrow(RuntimeException.class);
+        doNothing().when(usuarioService).cadastro(any(UsuarioDto.class));
 
         assertThatExceptionOfType(RequestParamException.class)
                 .isThrownBy(() -> service.salvar(doadorDto))
@@ -111,20 +114,22 @@ class DoadorServiceTest {
 
     @Test
     @DisplayName("Deve deletar Um doador")
-    void deveDeletarUmDoador() {
+    void deveDeletarUmDoador() throws Exception {
         doNothing().when(repository).delete(any(DoadorEntity.class));
+        doNothing().when(usuarioService).excluir(anyString());
         when(repository.findById(anyLong())).thenReturn(Optional.of(criarDoadorEntity()));
 
         service.deletar(1L);
 
         verify(repository, times(1)).delete(any(DoadorEntity.class));
-        verify(repository, times(1)).findById(anyLong());
+        verify(repository, times(2)).findById(anyLong());
     }
 
     @Test
     @DisplayName("Deve Lancar ResourceNotFoundExeption Quando Não Encontrar Um Doador Para Deletar")
-    void deveLancarResourceNotFoundExeptionQuandoNaoEncontrarUmDoadorParaDeletar() {
+    void deveLancarResourceNotFoundExeptionQuandoNaoEncontrarUmDoadorParaDeletar() throws Exception {
         when(repository.findById(anyLong())).thenReturn(Optional.empty());
+        doNothing().when(usuarioService).excluir(anyString());
 
         assertThatExceptionOfType(ResourceNotFoundExeption.class)
                 .isThrownBy(() -> service.deletar(1L))
@@ -144,7 +149,7 @@ class DoadorServiceTest {
                 .isThrownBy(() -> service.deletar(1L))
                 .withMessage("Não foi possível deletar o recurso com o id: 1");
 
-        verify(repository, times(1)).findById(anyLong());
+        verify(repository, times(2)).findById(anyLong());
     }
 
     @Test
