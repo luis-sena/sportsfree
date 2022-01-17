@@ -1,10 +1,6 @@
 package br.com.sportsfree.entity;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import br.com.sportsfree.entity.embeddable.Endereco;
 import lombok.AllArgsConstructor;
@@ -12,6 +8,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.time.LocalTime;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -23,17 +21,17 @@ import lombok.experimental.SuperBuilder;
 public class CursoEntity extends AbstractEntity<Long> {
     
     private String descricao;
-    @JoinColumn(name="idProfessor")
-    @ManyToOne  
-    private ProfessorEntity professor;
-    @JoinColumn(name="idEsporte")
     @ManyToOne
+    @JoinColumn(name="id_professor")
+    private ProfessorEntity professor;
+    @ManyToOne
+    @JoinColumn(name="id_esporte")
     private EsporteEntity esporte;
     @Embedded
     private Endereco local;
     private String dia;
-    private String horario_inicio;
-    private String horario_fim;
-    private int quantidade_max_alunos;
+    private LocalTime horarioInicio;
+    private LocalTime horarioFim;
+    private int quantidadeMaxAlunos;
 
 }

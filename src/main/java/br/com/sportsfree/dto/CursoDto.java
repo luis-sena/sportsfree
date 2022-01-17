@@ -1,11 +1,14 @@
 package br.com.sportsfree.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -19,7 +22,7 @@ public class CursoDto extends AbstractDto {
     private EsporteDto esporte;
     private EnderecoDto local;
     private String dia;
-    private String horario_inicio;
-    private String horario_fim;
-    private int quantidade_max_alunos;
+    private LocalTime horarioInicio;
+    private LocalTime horarioFim;
+    private int quantidadeMaxAlunos;
 }

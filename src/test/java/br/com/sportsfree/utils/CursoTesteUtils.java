@@ -9,6 +9,8 @@ import br.com.sportsfree.entity.EsporteEntity;
 import br.com.sportsfree.entity.ProfessorEntity;
 import br.com.sportsfree.entity.embeddable.Endereco;
 
+import java.time.LocalTime;
+
 public class CursoTesteUtils {
     
     public static CursoDto criarCursoDto(){
@@ -45,9 +47,9 @@ public class CursoTesteUtils {
             .esporte(esporteDto)
             .local(enderecoDto)
             .dia("Domingo")
-            .horario_inicio("08:00")
-            .horario_fim("10:00")
-            .quantidade_max_alunos(20)
+            .horarioInicio(LocalTime.of(8,0))
+            .horarioFim(LocalTime.of(10,0))
+            .quantidadeMaxAlunos(20)
             .build();
     }
 
@@ -85,9 +87,9 @@ public class CursoTesteUtils {
                 .esporte(esporteEntity)
                 .local(endereco)
                 .dia("Domingo")
-                .horario_inicio("08:00")
-                .horario_fim("10:00")
-                .quantidade_max_alunos(20)
+                .horarioInicio(LocalTime.of(8,0))
+                .horarioFim(LocalTime.of(10,0))
+                .quantidadeMaxAlunos(20)
                 .build();
     }
 

@@ -43,7 +43,7 @@ public abstract class AbstractService<D extends AbstractDto, E extends AbstractE
 
     public D salvar(D dto) {
         try {
-            E entity = repository.save(mapper.mapToEntity(dto));
+            E entity = repository.saveAndFlush(mapper.mapToEntity(dto));
             return mapper.mapToDto(entity);
         } catch (Exception e) {
             throw new RequestParamException("Erro ao salvar recurso, verifique os parametros digitados");

@@ -5,4 +5,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface AbstractRepository<T> extends JpaRepository<T, Long>{
+    void refresh(T entity);
 }
