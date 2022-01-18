@@ -14,7 +14,7 @@ import javax.validation.constraints.Email;
 public class ProfessorDto extends AbstractDto {
 
     private String nome;
-    @Email(message = "Email invalido", regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")
+    @Email(message = "Email invalido", regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*+@(?:[a-zA-Z0-9-]+\\.).+[a-zA-Z]{1,7}$")
     private String email;
     private String cpf;
     private String rg;
