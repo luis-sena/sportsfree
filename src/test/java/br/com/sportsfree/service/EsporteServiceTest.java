@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-public class EsporteServiceTest {
+class EsporteServiceTest {
     
     @Mock
     private EsporteRepository repository;

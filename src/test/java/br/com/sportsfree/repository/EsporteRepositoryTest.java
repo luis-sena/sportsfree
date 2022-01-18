@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @EnableJpaRepositories(repositoryBaseClass = AbstractRepositoryImpl.class)
 @EntityScan(basePackageClasses = EsporteEntity.class)
-public class EsporteRepositoryTest {
+class EsporteRepositoryTest {
  
     @Autowired
     private EsporteRepository repository;

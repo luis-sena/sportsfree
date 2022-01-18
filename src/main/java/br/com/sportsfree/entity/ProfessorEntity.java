@@ -1,7 +1,10 @@
 package br.com.sportsfree.entity;
 
 import br.com.sportsfree.entity.embeddable.Endereco;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 

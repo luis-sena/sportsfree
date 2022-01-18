@@ -30,7 +30,7 @@ import br.com.sportsfree.service.EsporteService;
 
 @WebMvcTest(EsporteController.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class EsporteControllerTest {
+class EsporteControllerTest {
     
     @Autowired
     private MockMvc mockMvc;
