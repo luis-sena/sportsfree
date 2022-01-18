@@ -4,14 +4,19 @@ import br.com.sportsfree.entity.CursoEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.time.LocalTime;
 import java.util.Optional;
 
 import static br.com.sportsfree.utils.CursoTesteUtils.criarCursoEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@EnableJpaRepositories(repositoryBaseClass = AbstractRepositoryImpl.class)
+@EntityScan(basePackageClasses = CursoEntity.class)
 public class CursoRepositoryTest {
  
     @Autowired
@@ -31,9 +36,9 @@ public class CursoRepositoryTest {
         assertThat(cursoSalvo.getEsporte()).isEqualTo(curso.getEsporte());
         assertThat(cursoSalvo.getLocal()).isEqualTo(curso.getLocal());
         assertThat(cursoSalvo.getDia()).isEqualTo(curso.getDia());
-        assertThat(cursoSalvo.getHorario_inicio()).isEqualTo(curso.getHorario_inicio());
-        assertThat(cursoSalvo.getHorario_fim()).isEqualTo(curso.getHorario_fim());
-        assertThat(cursoSalvo.getQuantidade_max_alunos()).isEqualTo(curso.getQuantidade_max_alunos());
+        assertThat(cursoSalvo.getHorarioInicio()).isEqualTo(curso.getHorarioInicio());
+        assertThat(cursoSalvo.getHorarioFim()).isEqualTo(curso.getHorarioFim());
+        assertThat(cursoSalvo.getQuantidadeMaxAlunos()).isEqualTo(curso.getQuantidadeMaxAlunos());
 
     }
 
@@ -46,8 +51,8 @@ public class CursoRepositoryTest {
 
         cursoSalvo.setDescricao("Descrição atualizada");
         cursoSalvo.setDia("Sexta-Feira");
-        cursoSalvo.setHorario_inicio("19:00");
-        cursoSalvo.setHorario_fim("21:00");
+        cursoSalvo.setHorarioInicio(LocalTime.of(19,0));
+        cursoSalvo.setHorarioFim(LocalTime.of(21,0));
 
         CursoEntity cursoAtualizado = this.repository.save(cursoSalvo);
 
@@ -58,9 +63,9 @@ public class CursoRepositoryTest {
         assertThat(cursoAtualizado.getEsporte()).isEqualTo(cursoSalvo.getEsporte());
         assertThat(cursoAtualizado.getLocal()).isEqualTo(cursoSalvo.getLocal());
         assertThat(cursoAtualizado.getDia()).isEqualTo(cursoSalvo.getDia());
-        assertThat(cursoAtualizado.getHorario_inicio()).isEqualTo(cursoSalvo.getHorario_inicio());
-        assertThat(cursoAtualizado.getHorario_fim()).isEqualTo(cursoSalvo.getHorario_fim());
-        assertThat(cursoAtualizado.getQuantidade_max_alunos()).isEqualTo(cursoSalvo.getQuantidade_max_alunos());
+        assertThat(cursoAtualizado.getHorarioInicio()).isEqualTo(cursoSalvo.getHorarioInicio());
+        assertThat(cursoAtualizado.getHorarioFim()).isEqualTo(cursoSalvo.getHorarioFim());
+        assertThat(cursoAtualizado.getQuantidadeMaxAlunos()).isEqualTo(cursoSalvo.getQuantidadeMaxAlunos());
     }
 
     @Test

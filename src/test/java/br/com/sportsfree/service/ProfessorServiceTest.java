@@ -39,11 +39,11 @@ class ProfessorServiceTest {
     void deveSalvarUmProfessor() {
         ProfessorDto professorDto = criarProfessorDto();
 
-        when(repository.save(any(ProfessorEntity.class))).thenReturn(criarProfessorEntity());
+        when(repository.saveAndFlush(any(ProfessorEntity.class))).thenReturn(criarProfessorEntity());
 
         ProfessorDto professorSalvo = service.salvar(professorDto);
 
-        verify(repository, times(1)).save(any(ProfessorEntity.class));
+        verify(repository, times(1)).saveAndFlush(any(ProfessorEntity.class));
         assertThat(professorDto).isEqualTo(professorSalvo);
     }
 
@@ -52,7 +52,7 @@ class ProfessorServiceTest {
     void deveLancarRequestParamExceptionQuandoNaoSalvarUmProfessor() {
         ProfessorDto professorDto = criarProfessorDto();
 
-        when(repository.save(any(ProfessorEntity.class))).thenThrow(RuntimeException.class);
+        when(repository.saveAndFlush(any(ProfessorEntity.class))).thenThrow(RuntimeException.class);
 
         assertThatExceptionOfType(RequestParamException.class)
                 .isThrownBy(() -> service.salvar(professorDto))
@@ -64,12 +64,12 @@ class ProfessorServiceTest {
     void deveAtualizarUmProfessor() {
         ProfessorDto professorDto = criarProfessorDtoComId();
 
-        when(repository.save(any(ProfessorEntity.class))).thenReturn(criarProfessorEntity());
+        when(repository.saveAndFlush(any(ProfessorEntity.class))).thenReturn(criarProfessorEntity());
         when(repository.findById(anyLong())).thenReturn(Optional.of(criarProfessorEntity()));
 
         ProfessorDto professorSalvo = service.atualizar(professorDto);
 
-        verify(repository, times(1)).save(any(ProfessorEntity.class));
+        verify(repository, times(1)).saveAndFlush(any(ProfessorEntity.class));
         verify(repository, times(1)).findById(anyLong());
         assertThat(professorDto).isEqualTo(professorSalvo);
     }
@@ -79,7 +79,7 @@ class ProfessorServiceTest {
     void deveLancarRequestParamExceptionQuandoNaoAtualizarUmProfessor() {
         ProfessorDto professorDto = criarProfessorDtoComId();
 
-        when(repository.save(any(ProfessorEntity.class))).thenThrow(RuntimeException.class);
+        when(repository.saveAndFlush(any(ProfessorEntity.class))).thenThrow(RuntimeException.class);
         when(repository.findById(anyLong())).thenReturn(Optional.of(criarProfessorEntity()));
 
         assertThatExceptionOfType(RequestParamException.class)
@@ -100,7 +100,7 @@ class ProfessorServiceTest {
                 .isThrownBy(() -> service.atualizar(professorDto))
                 .withMessage("Recurso não encontrado com o ID: 1");
 
-        verify(repository, never()).save(any(ProfessorEntity.class));
+        verify(repository, never()).saveAndFlush(any(ProfessorEntity.class));
         verify(repository, times(1)).findById(anyLong());
     }
 

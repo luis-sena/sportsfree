@@ -49,11 +49,12 @@ public class CursoServiceTest {
     void deveSalvarUmCurso() {
         CursoDto cursoDto = criarCursoDto();
 
-        when(repository.save(any(CursoEntity.class))).thenReturn(criarCursoEntity());
+        when(repository.saveAndFlush(any(CursoEntity.class))).thenReturn(criarCursoEntity());
+        doNothing().when(repository).refresh(any(CursoEntity.class));
 
         CursoDto cursoSalvo = service.salvar(cursoDto);
 
-        verify(repository, times(1)).save(any(CursoEntity.class));
+        verify(repository, times(1)).saveAndFlush(any(CursoEntity.class));
         assertThat(cursoDto).isEqualTo(cursoSalvo);
     }
     
@@ -62,7 +63,7 @@ public class CursoServiceTest {
     void deveLancarRequestParamExceptionQuandoNaoSalvarUmCurso() {
         CursoDto cursoDto = criarCursoDto();
 
-        when(repository.save(any(CursoEntity.class))).thenThrow(RuntimeException.class);
+        when(repository.saveAndFlush(any(CursoEntity.class))).thenThrow(RuntimeException.class);
 
         assertThatExceptionOfType(RequestParamException.class)
                 .isThrownBy(() -> service.salvar(cursoDto))
@@ -74,12 +75,13 @@ public class CursoServiceTest {
     void deveAtualizarUmCurso() {
         CursoDto cursoDto = criarCursoDtoComId();
 
-        when(repository.save(any(CursoEntity.class))).thenReturn(criarCursoEntity());
+        when(repository.saveAndFlush(any(CursoEntity.class))).thenReturn(criarCursoEntity());
         when(repository.findById(anyLong())).thenReturn(Optional.of(criarCursoEntity()));
+        doNothing().when(repository).refresh(any(CursoEntity.class));
 
         CursoDto cursoSalvo = service.atualizar(cursoDto);
 
-        verify(repository, times(1)).save(any(CursoEntity.class));
+        verify(repository, times(1)).saveAndFlush(any(CursoEntity.class));
         verify(repository, times(1)).findById(anyLong());
         assertThat(cursoDto).isEqualTo(cursoSalvo);
     }

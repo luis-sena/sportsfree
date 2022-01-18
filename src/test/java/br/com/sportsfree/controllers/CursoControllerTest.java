@@ -1,21 +1,8 @@
 package br.com.sportsfree.controllers;
 
-import static br.com.sportsfree.utils.CursoTesteUtils.criarCursoDto;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.List;
-
+import br.com.sportsfree.dto.CursoDto;
+import br.com.sportsfree.service.CursoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -25,8 +12,16 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import br.com.sportsfree.dto.CursoDto;
-import br.com.sportsfree.service.CursoService;
+import java.util.List;
+
+import static br.com.sportsfree.utils.CursoTesteUtils.criarCursoDto;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CursoController.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -58,9 +53,9 @@ public class CursoControllerTest {
                 .andExpect(jsonPath("$.esporte").value(cursoDto.getEsporte()))
                 .andExpect(jsonPath("$.local").value(cursoDto.getLocal()))
                 .andExpect(jsonPath("$.dia").value(cursoDto.getDia()))
-                .andExpect(jsonPath("$.horario_inicio").value(cursoDto.getHorario_inicio()))
-                .andExpect(jsonPath("$.horario_fim").value(cursoDto.getHorario_fim()))
-                .andExpect(jsonPath("$.quantidade_max_alunos").value(cursoDto.getQuantidade_max_alunos()));
+                .andExpect(jsonPath("$.horarioInicio").value(cursoDto.getHorarioInicio().toString()))
+                .andExpect(jsonPath("$.horarioFim").value(cursoDto.getHorarioFim().toString()))
+                .andExpect(jsonPath("$.quantidadeMaxAlunos").value(cursoDto.getQuantidadeMaxAlunos()));
     }
 
     @Test
@@ -80,9 +75,9 @@ public class CursoControllerTest {
                 .andExpect(jsonPath("$.esporte").value(cursoDto.getEsporte()))
                 .andExpect(jsonPath("$.local").value(cursoDto.getLocal()))
                 .andExpect(jsonPath("$.dia").value(cursoDto.getDia()))
-                .andExpect(jsonPath("$.horario_inicio").value(cursoDto.getHorario_inicio()))
-                .andExpect(jsonPath("$.horario_fim").value(cursoDto.getHorario_fim()))
-                .andExpect(jsonPath("$.quantidade_max_alunos").value(cursoDto.getQuantidade_max_alunos()));
+                .andExpect(jsonPath("$.horarioInicio").value(cursoDto.getHorarioInicio().toString()))
+                .andExpect(jsonPath("$.horarioFim").value(cursoDto.getHorarioFim().toString()))
+                .andExpect(jsonPath("$.quantidadeMaxAlunos").value(cursoDto.getQuantidadeMaxAlunos()));
     }
 
     @Test
@@ -109,9 +104,9 @@ public class CursoControllerTest {
                 .andExpect(jsonPath("$.esporte").value(cursoDto.getEsporte()))
                 .andExpect(jsonPath("$.local").value(cursoDto.getLocal()))
                 .andExpect(jsonPath("$.dia").value(cursoDto.getDia()))
-                .andExpect(jsonPath("$.horario_inicio").value(cursoDto.getHorario_inicio()))
-                .andExpect(jsonPath("$.horario_fim").value(cursoDto.getHorario_fim()))
-                .andExpect(jsonPath("$.quantidade_max_alunos").value(cursoDto.getQuantidade_max_alunos()));
+                .andExpect(jsonPath("$.horarioInicio").value(cursoDto.getHorarioInicio().toString()))
+                .andExpect(jsonPath("$.horarioFim").value(cursoDto.getHorarioFim().toString()))
+                .andExpect(jsonPath("$.quantidadeMaxAlunos").value(cursoDto.getQuantidadeMaxAlunos()));
     }
 
     @Test
@@ -129,9 +124,9 @@ public class CursoControllerTest {
                 .andExpect(jsonPath("$[0].esporte").value(cursoDto.getEsporte()))
                 .andExpect(jsonPath("$[0].local").value(cursoDto.getLocal()))
                 .andExpect(jsonPath("$[0].dia").value(cursoDto.getDia()))
-                .andExpect(jsonPath("$[0].horario_inicio").value(cursoDto.getHorario_inicio()))
-                .andExpect(jsonPath("$[0].horario_fim").value(cursoDto.getHorario_fim()))
-                .andExpect(jsonPath("$[0].quantidade_max_alunos").value(cursoDto.getQuantidade_max_alunos()));
+                .andExpect(jsonPath("$[0].horarioInicio").value(cursoDto.getHorarioInicio().toString()))
+                .andExpect(jsonPath("$[0].horarioFim").value(cursoDto.getHorarioFim().toString()))
+                .andExpect(jsonPath("$[0].quantidadeMaxAlunos").value(cursoDto.getQuantidadeMaxAlunos()));
     }
 
 }

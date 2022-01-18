@@ -45,9 +45,9 @@ class CursoMapperTest {
         assertThat(cursoDto.getId()).isNotNull();
         assertThat(cursoDto.getDescricao()).isEqualTo(cursoEntity.getDescricao());
         assertThat(cursoDto.getDia()).isEqualTo(cursoEntity.getDia());
-        assertThat(cursoDto.getHorario_inicio()).isEqualTo(cursoEntity.getHorario_inicio());
-        assertThat(cursoDto.getHorario_fim()).isEqualTo(cursoEntity.getHorario_fim());
-        assertThat(cursoDto.getQuantidade_max_alunos()).isEqualTo(cursoEntity.getQuantidade_max_alunos());
+        assertThat(cursoDto.getHorarioInicio()).isEqualTo(cursoEntity.getHorarioInicio());
+        assertThat(cursoDto.getHorarioFim()).isEqualTo(cursoEntity.getHorarioFim());
+        assertThat(cursoDto.getQuantidadeMaxAlunos()).isEqualTo(cursoEntity.getQuantidadeMaxAlunos());
 
         assertThat(professorDto).isNotNull();
         assertThat(professorDto.getId()).isNotNull();
@@ -91,9 +91,9 @@ class CursoMapperTest {
         assertThat(curso.getId()).isNotNull();
         assertThat(curso.getDescricao()).isEqualTo(cursoDto.getDescricao());
         assertThat(curso.getDia()).isEqualTo(cursoDto.getDia());
-        assertThat(curso.getHorario_inicio()).isEqualTo(cursoDto.getHorario_inicio());
-        assertThat(curso.getHorario_fim()).isEqualTo(cursoDto.getHorario_fim());
-        assertThat(curso.getQuantidade_max_alunos()).isEqualTo(cursoDto.getQuantidade_max_alunos());
+        assertThat(curso.getHorarioInicio()).isEqualTo(cursoDto.getHorarioInicio());
+        assertThat(curso.getHorarioFim()).isEqualTo(cursoDto.getHorarioFim());
+        assertThat(curso.getQuantidadeMaxAlunos()).isEqualTo(cursoDto.getQuantidadeMaxAlunos());
 
         assertThat(professorEntity).isNotNull();
         assertThat(professorEntity.getId()).isNotNull();

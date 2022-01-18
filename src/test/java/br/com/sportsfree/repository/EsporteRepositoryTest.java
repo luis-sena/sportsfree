@@ -1,10 +1,13 @@
 package br.com.sportsfree.repository;
 
+import br.com.sportsfree.entity.DoadorEntity;
 import br.com.sportsfree.entity.EsporteEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +16,8 @@ import static br.com.sportsfree.utils.EsporteTesteUtils.criarEsporteEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@EnableJpaRepositories(repositoryBaseClass = AbstractRepositoryImpl.class)
+@EntityScan(basePackageClasses = EsporteEntity.class)
 public class EsporteRepositoryTest {
  
     @Autowired

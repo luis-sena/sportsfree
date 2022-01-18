@@ -1,5 +1,6 @@
 package br.com.sportsfree.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -22,7 +23,9 @@ public class CursoDto extends AbstractDto {
     private EsporteDto esporte;
     private EnderecoDto local;
     private String dia;
+    @JsonFormat(pattern="HH:mm")
     private LocalTime horarioInicio;
+    @JsonFormat(pattern="HH:mm")
     private LocalTime horarioFim;
     private int quantidadeMaxAlunos;
 }

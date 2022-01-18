@@ -1,5 +1,7 @@
 package br.com.sportsfree;
 
+
+import br.com.sportsfree.config.JpaConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
