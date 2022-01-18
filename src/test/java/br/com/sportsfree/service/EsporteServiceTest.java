@@ -1,3 +1,4 @@
+
 package br.com.sportsfree.service;
 
 import br.com.sportsfree.dto.EsporteDto;
@@ -39,11 +40,11 @@ public class EsporteServiceTest {
     void deveSalvarUmEsporte() {
         EsporteDto esporteDto = criarEsporteDto();
 
-        when(repository.save(any(EsporteEntity.class))).thenReturn(criarEsporteEntity());
+        when(repository.saveAndFlush(any(EsporteEntity.class))).thenReturn(criarEsporteEntity());
 
         EsporteDto esporteSalvo = service.salvar(esporteDto);
 
-        verify(repository, times(1)).save(any(EsporteEntity.class));
+        verify(repository, times(1)).saveAndFlush(any(EsporteEntity.class));
         assertThat(esporteDto).isEqualTo(esporteSalvo);
     }
 
@@ -52,7 +53,7 @@ public class EsporteServiceTest {
     void deveLancarRequestParamExceptionQuandoNaoSalvarUmEsporte() {
         EsporteDto esporteDto = criarEsporteDto();
 
-        when(repository.save(any(EsporteEntity.class))).thenThrow(RuntimeException.class);
+        when(repository.saveAndFlush(any(EsporteEntity.class))).thenThrow(RuntimeException.class);
 
         assertThatExceptionOfType(RequestParamException.class)
                 .isThrownBy(() -> service.salvar(esporteDto))
@@ -64,12 +65,12 @@ public class EsporteServiceTest {
     void deveAtualizarUmEsporte() {
         EsporteDto esporteDto = criarEsporteDtoComId();
 
-        when(repository.save(any(EsporteEntity.class))).thenReturn(criarEsporteEntity());
+        when(repository.saveAndFlush(any(EsporteEntity.class))).thenReturn(criarEsporteEntity());
         when(repository.findById(anyLong())).thenReturn(Optional.of(criarEsporteEntity()));
 
         EsporteDto esporteSalvo = service.atualizar(esporteDto);
 
-        verify(repository, times(1)).save(any(EsporteEntity.class));
+        verify(repository, times(1)).saveAndFlush(any(EsporteEntity.class));
         verify(repository, times(1)).findById(anyLong());
         assertThat(esporteDto).isEqualTo(esporteSalvo);
     }
@@ -79,7 +80,7 @@ public class EsporteServiceTest {
     void deveLancarRequestParamExceptionQuandoNaoAtualizarUmEsporte() {
         EsporteDto esporteDto = criarEsporteDtoComId();
 
-        when(repository.save(any(EsporteEntity.class))).thenThrow(RuntimeException.class);
+        when(repository.saveAndFlush(any(EsporteEntity.class))).thenThrow(RuntimeException.class);
         when(repository.findById(anyLong())).thenReturn(Optional.of(criarEsporteEntity()));
 
         assertThatExceptionOfType(RequestParamException.class)

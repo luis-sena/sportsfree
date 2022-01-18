@@ -44,11 +44,11 @@ class DoadorServiceTest {
     void deveSalvarUmDoador() {
         DoadorDto doadorDto = criarDoadorDto();
 
-        when(repository.save(any(DoadorEntity.class))).thenReturn(criarDoadorEntity());
+        when(repository.saveAndFlush(any(DoadorEntity.class))).thenReturn(criarDoadorEntity());
 
         DoadorDto doadorSalvo = service.salvar(doadorDto);
 
-        verify(repository, times(1)).save(any(DoadorEntity.class));
+        verify(repository, times(1)).saveAndFlush(any(DoadorEntity.class));
         assertThat(doadorDto).isEqualTo(doadorSalvo);
     }
 
@@ -57,7 +57,7 @@ class DoadorServiceTest {
     void deveLancarRequestParamExceptionQuandoNaoSalvarUmDoador() {
         DoadorDto doadorDto = criarDoadorDto();
 
-        when(repository.save(any(DoadorEntity.class))).thenThrow(RuntimeException.class);
+        when(repository.saveAndFlush(any(DoadorEntity.class))).thenThrow(RuntimeException.class);
 
         assertThatExceptionOfType(RequestParamException.class)
                 .isThrownBy(() -> service.salvar(doadorDto))
@@ -69,12 +69,12 @@ class DoadorServiceTest {
     void deveAtualizarUmDoador() {
         DoadorDto doadorDto = criarDoadorDtoComId();
 
-        when(repository.save(any(DoadorEntity.class))).thenReturn(criarDoadorEntity());
+        when(repository.saveAndFlush(any(DoadorEntity.class))).thenReturn(criarDoadorEntity());
         when(repository.findById(anyLong())).thenReturn(Optional.of(criarDoadorEntity()));
 
         DoadorDto doadorSalvo = service.atualizar(doadorDto);
 
-        verify(repository, times(1)).save(any(DoadorEntity.class));
+        verify(repository, times(1)).saveAndFlush(any(DoadorEntity.class));
         verify(repository, times(1)).findById(anyLong());
         assertThat(doadorDto).isEqualTo(doadorSalvo);
     }
@@ -84,7 +84,7 @@ class DoadorServiceTest {
     void deveLancarRequestParamExceptionQuandoNaoAtualizarUmDoador() {
         DoadorDto doadorDto = criarDoadorDtoComId();
 
-        when(repository.save(any(DoadorEntity.class))).thenThrow(RuntimeException.class);
+        when(repository.saveAndFlush(any(DoadorEntity.class))).thenThrow(RuntimeException.class);
         when(repository.findById(anyLong())).thenReturn(Optional.of(criarDoadorEntity()));
 
         assertThatExceptionOfType(RequestParamException.class)
@@ -105,7 +105,7 @@ class DoadorServiceTest {
                 .isThrownBy(() -> service.atualizar(doadorDto))
                 .withMessage("Recurso não encontrado com o ID: 1");
 
-        verify(repository, never()).save(any(DoadorEntity.class));
+        verify(repository, never()).saveAndFlush(any(DoadorEntity.class));
         verify(repository, times(1)).findById(anyLong());
     }
 
